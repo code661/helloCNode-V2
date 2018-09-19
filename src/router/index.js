@@ -7,5 +7,10 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    // {
+    //   name: 'root',
+    //   path: '/',
+    //   component: 
+    // }
   ]
 })
