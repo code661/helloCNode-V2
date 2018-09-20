@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import {LoadingBar} from 'iview'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -14,3 +15,14 @@ export default new Router({
     // }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  LoadingBar.start();
+  next();
+});
+
+router.afterEach(route => {
+  LoadingBar.finish();
+});
+
+export default router
