@@ -3,8 +3,8 @@
     <Card v-if="post">
       <div slot="title">
         <h2>{{post.title}}</h2>
-        <Button v-if="isCollected" @click="deCollect">取消收藏</Button>
-        <Button v-else @click="collect">收藏</Button>
+        <Button v-if="isCollected" @click="clickCollectBtn('postDeCollect')">取消收藏</Button>
+        <Button v-else @click="clickCollectBtn('postCollect')">收藏</Button>
       </div>
       <div 
         v-html="post.content"
@@ -32,33 +32,33 @@ export default {
   },
   computed: {
     isCollected() {
-      let {collects} = this.$store.state;
-      if ( collects && collects.find(post => post.id === this.$route.params.id)) return true;
+      let { collects } = this.$store.state;
+      if (collects && collects.find(post => post.id === this.$route.params.id))
+        return true;
       return false;
-    },
+    }
   },
   methods: {
     async getPost(id) {
       let result = await this.$api.getPost(id);
       this.post = result.data;
     },
-    async collect() {
+    async clickCollectBtn(action) {
       let { accesstoken, userinfo } = this.$store.state;
       if (accesstoken && userinfo) {
-        try {
-          let result = await this.$api.postCollect(accesstoken, this.post.id);
-          this.$store.dispatch("getCollects", userinfo.loginname);
-        } catch (error) {
-          console.log(error);
-        }
+        let result = await this.$api[action](accesstoken, this.post.id);
+        this.$store.dispatch("getCollects", userinfo.loginname);
       } else {
-        this.$message.warning("您还未登录，不能该操作");
+        this.$message.warning("您还未登录，不能进行该操作");
       }
-    },
-    async deCollect() {}
+    }
   },
   created() {
     this.getPost(this.$route.params.id);
+    let { accesstoken, userinfo, collects } = this.$store.state;
+    if (accesstoken && userinfo && !collects) {
+      this.$store.dispatch("getCollects", userinfo.loginname);
+    }
   }
 };
 </script>

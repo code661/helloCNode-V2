@@ -18,6 +18,7 @@ export default new Vuex.Store({
     logout(state) {
       state.accesstoken = null;
       state.userinfo = null;
+      state.collects = null
     },
     updateCollects(state, collects) {
       state.collects = collects;

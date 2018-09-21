@@ -82,7 +82,7 @@ export default class Service {
    * 
    */
   static postDeCollect(accesstoken, topicId){
-    return http.post('/topic_collect/de_collect',{accesstoken, topicId})
+    return http.post('/topic_collect/de_collect',{accesstoken, topic_id:topicId})
   }
 
 }
