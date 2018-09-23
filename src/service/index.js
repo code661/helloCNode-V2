@@ -31,7 +31,6 @@ export default class Service {
     return http.get(`/topic/${id}`);
   }
 
-
   /**
    * @api /topic_collect/:loginname
    * @name 用户所收藏的主题
@@ -39,8 +38,8 @@ export default class Service {
    * @method GET
    *
    */
-  static getCollects(username){
-    return http.get(`/topic_collect/${username}`)
+  static getCollects(username) {
+    return http.get(`/topic_collect/${username}`);
   }
 
   /**
@@ -50,12 +49,12 @@ export default class Service {
    * @method POST
    *
    * @param accesstoken String 用户的 accessToken，如果成功匹配上用户，返回成功信息。否则 403。
-   * 
+   *
    */
 
-   static postAccessToken(accesstoken){
-    return http.post('/accesstoken',{accesstoken})
-   }
+  static postAccessToken(accesstoken) {
+    return http.post("/accesstoken", { accesstoken });
+  }
 
   /**
    * @api  /topic_collect/collect
@@ -65,10 +64,13 @@ export default class Service {
    *
    * @param accesstoken String 用户的 accessToken
    * @param topic_id    String 主题的id
-   * 
+   *
    */
-  static postCollect(accesstoken, topicId){
-    return http.post('/topic_collect/collect',{accesstoken, topic_id:topicId})
+  static postCollect(accesstoken, topicId) {
+    return http.post("/topic_collect/collect", {
+      accesstoken,
+      topic_id: topicId
+    });
   }
 
   /**
@@ -79,10 +81,52 @@ export default class Service {
    *
    * @param accesstoken String 用户的 accessToken
    * @param topic_id    String 主题的id
-   * 
+   *
    */
-  static postDeCollect(accesstoken, topicId){
-    return http.post('/topic_collect/de_collect',{accesstoken, topic_id:topicId})
+  static postDeCollect(accesstoken, topicId) {
+    return http.post("/topic_collect/de_collect", {
+      accesstoken,
+      topic_id: topicId
+    });
   }
 
+  /**
+   * @api  /reply/:reply_id/ups
+   * @name 为评论点赞
+   *
+   * @method POST
+   *
+   * @param accesstoken String 用户的 accessToken
+   *
+   */
+
+  static postUps(accesstoken, replyId) {
+    return http.post(`/reply/${replyId}/ups`, { accesstoken });
+  }
+
+  /**
+   * @api /topic/:topic_id/replies
+   * @name 创建新评论
+   *
+   * @method POST
+   *
+   * @param accesstoken String 用户的 accessToken
+   * @param content     String 评论的主体
+   * @param reply_id    如果这个评论是对另一个评论的回复，请务必带上此字段。这样前端就可以构建出评论线索图。
+   */
+
+  static postReplies(accesstoken, topicId, content) {
+    return http.post(`/topic/${topicId}/replies`, { accesstoken, content });
+  }
+
+  /**
+   * @api /user/:loginname
+   * @name 用户详情
+   *
+   * @method GET
+   *
+   */
+   static getUser(username){
+     return http.get(`/user/${username}`)
+   }
 }
