@@ -1,13 +1,44 @@
-<template>
-  <div>
-    test
-    <button @click="$router.push('/login')">登录</button>
-    <button @click="logout">注销</button>
+<template slot="header">
+  <div class="header">
+      <Header>
+          <Menu mode="horizontal" theme="dark" @on-select="select">
+              <div class="layout-logo">
+                <img src="@/assets/cnodejs_light.svg" alt="cnode">
+              </div>
+              <div class="layout-nav">
+                  <MenuItem name="home" to="/">
+                    首页
+                  </MenuItem>
+                  <MenuItem name="login" v-if="!this.$store.state.userinfo" to="/login">
+                    登录
+                  </MenuItem>
+                  <Submenu name="submenu" v-if="this.$store.state.userinfo">
+                    <template slot="title">
+                      <Icon size="18" type="md-contact" />
+                    </template>
+                    <MenuItem name="center">个人中心</MenuItem>
+                    <MenuItem name="message">未读消息</MenuItem>
+                    <MenuItem name="logout">注销</MenuItem>
+                  </Submenu>
+              </div>
+          </Menu>
+      </Header>
   </div>
 </template>
 
 <script>
+import {
+  Menu,
+  MenuItem,
+  Header,
+  Icon,
+  Submenu,
+  Avatar,
+  Badge
+} from "iview";
+
 export default {
+  components: { Menu, MenuItem, Header, Icon, Submenu, Avatar, Badge },
   methods: {
     async login(accesstoke) {
       try {
@@ -24,6 +55,13 @@ export default {
     logout() {
       this.$store.dispatch("logout");
       this.$message.success("注销成功");
+    },
+    select(name){
+      switch(name){
+        case "logout":
+          this.logout()
+          break
+      }
     }
   },
   created() {
@@ -35,6 +73,15 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.layout-logo 
+  float: left
+  position: relative
+  top: 10px
+  left: 20px
+  width 130px
+
+.layout-nav 
+  float: right
 </style>
 
 

@@ -1,11 +1,13 @@
 <template>
   <div class=editor>
     <Card>
-      <div slot="title"></div>
+      <div slot="title">
+        <slot name="title">回复主题</slot>
+      </div>
       <a href="javascript:;" slot="extra" @click.prevent="previewVisible = !previewVisible">
-            Change
-        </a>
-      <textarea v-model="input"></textarea>
+          <Button shape="circle" icon="ios-search"></Button>
+      </a>
+      <Input v-model="input" type="textarea" :rows="4" placeholder="Enter something..." />
       <div class="preview" v-html="compiledMarkdown" v-show="previewVisible"></div>
       <Button type="primary" :loading="loading" @click="handleSubmit">提交</Button>
     </Card>
@@ -13,7 +15,7 @@
 </template>
 
 <script>
-import { Button, Card } from "iview";
+import { Button, Card, Input } from "iview";
 import marked from "marked";
 
 export default {
@@ -26,7 +28,8 @@ export default {
   props:["loading"],
   components: {
     Button,
-    Card
+    Card,
+    Input
   },
   computed: {
     compiledMarkdown() {

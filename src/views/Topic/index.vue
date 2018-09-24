@@ -52,8 +52,8 @@ export default {
     }
   },
   methods: {
-    async getPost(id, accesstoken) {
-      let result = await this.$api.getPost(id, accesstoken);
+    async getPost(id) {
+      let result = await this.$api.getPost(id);
       this.post = result.data;
     },
     async clickCollectBtn(action) {
@@ -101,6 +101,11 @@ export default {
     this.getPost(this.$route.params.id);
     if (accesstoken && userinfo && !collects) {
       this.$store.dispatch("getCollects", userinfo.loginname);
+    }
+  },
+  watch:{
+    $route(){
+      this.getPost(this.$route.params.id)
     }
   }
 };

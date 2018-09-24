@@ -1,30 +1,31 @@
 <template>
-    <Card 
-      :dis-hover=true
-    > 
+  <Card>
+    <div slot="title">
       <Tab
         @change-tab="routeTo"
         :tab="this.$route.query.tab || 'all'"
         :page="currentPage"
       />
-      <Cell
-        v-for="data in datas" 
-        :data="data" 
-        :key="data.id"
-      />
-      <Page
-        class-name="page"
-        @on-change="routeTo"
-        :total="1000"
-        show-elevator
-        size="small"
-        :current="currentPage"
-      />
-    </Card>
+      <Button type="success">发布主题</Button>
+    </div>
+    <Cell
+      v-for="data in datas" 
+      :data="data" 
+      :key="data.id"
+    />
+    <Page
+      class-name="page"
+      @on-change="routeTo"
+      :total="1000"
+      show-elevator
+      size="small"
+      :current="currentPage"
+    />
+  </Card>
 </template>
 
 <script>
-import { Card, Page } from "iview";
+import { Card, Page, Button } from "iview";
 import Cell from "@/components/Cell";
 import Tab from "@/components/Tab"
 
@@ -34,7 +35,8 @@ export default {
     Card,
     Page,
     Cell,
-    Tab
+    Tab,
+    Button
   },
   data() {
     return {
