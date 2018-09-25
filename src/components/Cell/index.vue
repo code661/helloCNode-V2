@@ -5,7 +5,7 @@
       <span class="reply_count">{{ data.reply_count }}</span> /
       <span class="visit_count">{{ data.visit_count }}</span>
     </div>
-    <Put :data=data v-if="data.tab || datas.good"></Put>
+    <Put :data=data v-if="data.tab || data.good"></Put>
     <div class="title">
       <router-link class="title-a" :to="'/topic/'+ data.id ">
         {{data.title}}
@@ -14,17 +14,16 @@
     <Time
       class="time"
       :time="data.last_reply_at"
-      :type="data.last_reply_at | formatType"
+      :type="data.last_reply_at | formatTime"
     >
     </Time>
   </div>
-
 </template>
 
 <script>
 import { Avatar, Time } from "iview";
-import dayjs from "dayjs";
 import Put from "../Put";
+import formatTime from "@/utils/formatTime"
 
 export default {
   components: {
@@ -39,11 +38,7 @@ export default {
     }
   },
   filters: {
-    formatType(time) {
-      let now = dayjs();
-      let diff = dayjs().diff(dayjs(time), "month");
-      return diff > 0 ? "date" : "relative";
-    }
+    formatTime
   }
 };
 </script>
@@ -54,7 +49,8 @@ export default {
   align-items center
   padding 10px
   font-size 14px
-  border-bottom 1px solid #f0f0f0
+  &:not(:last-child)
+    border-bottom 1px solid #f0f0f0
   .reply
     width 80px
     text-align center

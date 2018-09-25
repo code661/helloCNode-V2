@@ -1,19 +1,20 @@
 <template>
-  <div class="userinfo" v-if="userInfo">
+  <div class="user" v-if="userInfo">
     <Card>
       <p slot="title">
         个人信息
       </p>
-      <Avatar :src="userInfo.avatar_url" />
-      <span>{{userInfo.loginname}}</span> 
-      <p>
-        <Icon type="logo-github" />
-        <a :href="`https://github.com/${userInfo.githubUsername}`">@{{userInfo.githubUsername}}</a>
-      </p>
-      <p>{{userInfo.score}} 积分</p>
-      <span>注册时间 </span>
-      <Time type="datetime" :time="userInfo.create_at" />
-
+      <div class="info">
+        <Avatar :src="userInfo.avatar_url" shape="square" size="large" />
+        <span>{{userInfo.loginname}}</span> 
+        <p> 
+          <Icon size="30" type="logo-github" />
+          <a :href="`https://github.com/${userInfo.githubUsername}`">@{{userInfo.githubUsername}}</a>
+        </p>
+        <p>{{userInfo.score}} 积分</p>
+        <span>注册时间 </span>
+        <Time type="datetime" :type="userInfo.create_at | formatTime" :time="userInfo.create_at" />        
+      </div>
     </Card>
     <Card>
       <p slot="title">
@@ -33,6 +34,7 @@
 <script>
 import {Card,Avatar,Time,Icon} from "iview"
 import Cell from "@/components/Cell"
+import formatTime from "@/utils/formatTime"
 
 export default {
   props:["username"],
@@ -74,7 +76,18 @@ export default {
   },
   created(){
     this.getUser()
+  },
+  filters:{
+    formatTime
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+
+.user
+  flex-grow 1
+  overflow hidden
+  min-width 300px
+</style>
 

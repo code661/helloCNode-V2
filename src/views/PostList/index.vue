@@ -1,6 +1,6 @@
 <template>
   <Card>
-    <div slot="title">
+    <div slot="title" class="header">
       <Tab
         @change-tab="routeTo"
         :tab="this.$route.query.tab || 'all'"
@@ -8,11 +8,13 @@
       />
       <Button type="success">发布主题</Button>
     </div>
-    <Cell
-      v-for="data in datas" 
-      :data="data" 
-      :key="data.id"
-    />
+    <div class="content">
+      <Cell
+        v-for="data in datas" 
+        :data="data"
+        :key="data.id"
+      />
+    </div>
     <Page
       class-name="page"
       @on-change="routeTo"
@@ -79,6 +81,12 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.header
+  display flex
+  justify-content space-between
+  align-items center
+.page
+  margin-top 10px
 </style>
 
 

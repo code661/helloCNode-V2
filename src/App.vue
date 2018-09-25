@@ -5,11 +5,11 @@
         <Header></Header>
       </slot>
       <Content :style="{padding: '0 50px', marginTop: '20px'}">
-        <div class="main" style="min-height: 200px;">
+        <div class="main">
           <router-view></router-view>
         </div>
       </Content>
-      <Footer class="layout-footer-center">2011-2016 &copy; TalkingData</Footer>
+      <Footer class="layout-footer-center">自豪地采用 Vue.js 🎉</Footer>
     </Layout>
   </div>
 </template>
@@ -25,30 +25,15 @@ export default {
 
 <style lang="stylus" scoped>
 
-*
-  margin 0
-  padding 0
-  box-sizing border-box
-
-img
-  width 100%
-  display block
-
-ul, ol
-  list-style none
-  line-height 1
-
-a
-  color inherit
-  text-decoration none
-
 .layout
   background #f5f7f9
   position: relative
   overflow: hidden
+  .main
+    min-width 600px
+  .layout-footer-center
+    text-align: center
 
-.layout-footer-center
-  text-align: center
 
 </style>
 

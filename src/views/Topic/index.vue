@@ -1,32 +1,56 @@
 <template>
   <div class="cotainer" v-if="post">
-    <Card>
-      <div slot="title">
-        <h2>{{post.title}}</h2>
-        <Button v-if="isCollected" @click="clickCollectBtn('postDeCollect')">取消收藏</Button>
-        <Button v-else @click="clickCollectBtn('postCollect')">收藏</Button>
+    <div class="topic">
+      <div class="article">
+        <Card>
+          <div slot="title" class="content_header">
+            <div>
+              <Put :data="post" v-if="post.tab || post.good"></Put>
+              <h2>{{post.title}}</h2>
+              <span>发布于</span>
+              <Time
+                :time="post.create_at"
+                :type="post.create_at | formatTime"
+              ></Time>
+              <Divider type="vertical" />
+              <span>作者 {{post.author.loginname}}</span>
+              <Divider type="vertical" />
+              <span>{{post.visit_count}} 次浏览</span>
+            </div>
+            <Button v-if="isCollected" @click="clickCollectBtn('postDeCollect')">取消收藏</Button>
+            <Button v-else @click="clickCollectBtn('postCollect')">收藏</Button>
+          </div>
+          <div 
+            v-html="post.content"
+            class="content"
+          >
+          </div>
+        </Card>
+        <div class="reply">
+          <Card>
+            <p slot="title">
+              <Icon type="ios-chatbubbles" />
+              {{post.replies.length}} 条回复
+            </p>
+            <div class="cell" v-for="reply in post.replies">
+              <div v-html="reply.content"></div>
+              <Button @click="postUps(reply.id, reply.ups)">{{ reply.ups.length }}</Button>
+            </div>
+          </Card>          
+        </div>
+        <MarkDown :loading="loading" @submit="handleSubmit"></MarkDown>
       </div>
-      <div 
-        v-html="post.content"
-        class="content"
-      >
-      </div>
-    </Card>
-    <Card>
-      <div class="cell" v-for="reply in post.replies">
-        <div v-html="reply.content"></div>
-        <Button @click="postUps(reply.id, reply.ups)">{{ reply.ups.length }}</Button>
-      </div>
-    </Card>
-    <MarkDown :loading="loading" @submit="handleSubmit"></MarkDown>
+    </div>
     <User :username="post.author.loginname"></User>
   </div>
 </template>
 
 <script>
-import { Card, Button } from "iview";
+import { Card, Button, Time, Divider, Icon } from "iview";
 import MarkDown from "@/components/MarkDown"
 import User from "@/views/User"
+import formatTime from "@/utils/formatTime"
+import Put from "@/components/Put"
 
 export default {
   name: "Topic",
@@ -34,7 +58,11 @@ export default {
     Card,
     Button,
     MarkDown,
-    User
+    User,
+    Time,
+    Put,
+    Divider,
+    Icon
   },
   props: ["id"],
   data() {
@@ -107,9 +135,19 @@ export default {
     $route(){
       this.getPost(this.$route.params.id)
     }
+  },
+  filters:{
+    formatTime
   }
 };
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
+.cotainer
+  display flex
+  justify-content space-between
+  .topic
+    flex-grow 0
+    min-width calc(100% - 330px)
+    margin-right 15px
 </style>
