@@ -5,7 +5,7 @@
       <span class="reply_count">{{ data.reply_count }}</span> /
       <span class="visit_count">{{ data.visit_count }}</span>
     </div>
-    <Put :data=data v-if="data.tab || data.good"></Put>
+    <Put :data="data" v-if="data.tab || data.good"></Put>
     <div class="title">
       <router-link class="title-a" :to="'/topic/'+ data.id ">
         {{data.title}}

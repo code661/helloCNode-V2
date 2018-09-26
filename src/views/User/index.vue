@@ -1,31 +1,27 @@
 <template>
   <div class="user" v-if="userInfo">
-    <Card>
-      <p slot="title">
-        个人信息
-      </p>
+    <Card title="个人信息" class="card">
       <div class="info">
-        <Avatar :src="userInfo.avatar_url" shape="square" size="large" />
-        <span>{{userInfo.loginname}}</span> 
-        <p> 
+        <div class="info-item">
+          <Avatar :src="userInfo.avatar_url" shape="square" size="large" />
+          <span class="main-info">{{userInfo.loginname}}</span> 
+        </div>
+        <div class="info-item"> 
           <Icon size="30" type="logo-github" />
           <a :href="`https://github.com/${userInfo.githubUsername}`">@{{userInfo.githubUsername}}</a>
-        </p>
-        <p>{{userInfo.score}} 积分</p>
-        <span>注册时间 </span>
-        <Time type="datetime" :type="userInfo.create_at | formatTime" :time="userInfo.create_at" />        
+        </div>
+        <div class="info-item">{{userInfo.score}} 积分</div>
+        <div class="info-item">
+          <span>注册时间 </span>
+          <Time type="datetime" :type="userInfo.create_at | formatTime" :time="userInfo.create_at" />
+        </div>
+
       </div>
     </Card>
-    <Card>
-      <p slot="title">
-        最近创建的话题
-      </p>
+    <Card title="最近创建的话题" class="card">
       <Cell v-for="(data,index) in limitRecentTopics" :data="data" :key="index"></Cell>
     </Card>
-    <Card>
-      <p slot="title">
-        最近参与的话题
-      </p>
+    <Card title="最近参与的话题" class="card">
       <Cell v-for="(data,index) in limitRecentReplies" :data="data" :key="index"></Cell>
     </Card>
   </div>
@@ -89,5 +85,12 @@ export default {
   flex-grow 1
   overflow hidden
   min-width 300px
+  .card
+    margin-bottom 10px
+    .info-item
+      margin-bottom 10px
+      .main-info
+        font-weight 800
+        margin-left 10px
 </style>
 

@@ -11,7 +11,10 @@ const router = new Router({
     {
       name: "root",
       path: "/",
-      component: () => import("@/views/PostList")
+      component: () => import("@/views/PostList"),
+      meta:{
+        title: "主页"
+      }
     },
     {
       name: "topic",
@@ -22,19 +25,28 @@ const router = new Router({
     {
       name: "login",
       path: "/login",
-      component: ()=> import("@/views/Login")
+      component: ()=> import("@/views/Login"),
+      meta:{
+        title: "登录"
+      }
     },
     {
       name: "user",
       path: "/user/:username",
       component: ()=> import("@/views/User"),
-      props: true
+      props: true,
+      meta:{
+        title: "个人主页"
+      }
     }
   ]
 });
 
 router.beforeEach((to, from, next) => {
   LoadingBar.start();
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
   next();
 });
 

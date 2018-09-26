@@ -2,7 +2,9 @@
   <div class=editor>
     <Card>
       <div slot="title">
-        <slot name="title">回复主题</slot>
+        <slot name="title">
+          <p>回复主题</p>
+        </slot>
       </div>
       <a href="javascript:;" slot="extra" @click.prevent="previewVisible = !previewVisible">
           <Button shape="circle" icon="ios-search"></Button>

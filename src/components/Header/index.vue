@@ -16,7 +16,7 @@
                     <template slot="title">
                       <Icon size="18" type="md-contact" />
                     </template>
-                    <MenuItem name="center">个人中心</MenuItem>
+                    <MenuItem name="center" :to="`/user/${this.$store.state.userinfo.loginname}`">个人中心</MenuItem>
                     <MenuItem name="message">未读消息</MenuItem>
                     <MenuItem name="logout">注销</MenuItem>
                   </Submenu>

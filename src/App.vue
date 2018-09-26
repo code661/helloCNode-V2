@@ -30,7 +30,7 @@ export default {
   position: relative
   overflow: hidden
   .main
-    min-width 600px
+    min-width 800px
   .layout-footer-center
     text-align: center
 
