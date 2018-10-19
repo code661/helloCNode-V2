@@ -4,8 +4,9 @@
       <Icon type="ios-text" />
       登录
     </p>
-    <Input :autofocus="true" @on-enter="login" v-model="accesstoken" placeholder="Enter your accesstoken..." style="width: 300px" />
-    <Button @click="login" icon="md-arrow-round-forward"></Button>
+    <Input :autofocus="true" @on-enter="login" v-model="accesstoken" placeholder="Enter your accesstoken..." style="width: 300px">
+      <Button slot="append" @click="login" icon="md-arrow-round-forward"></Button>
+    </Input>
   </Card>
 </template>
 
