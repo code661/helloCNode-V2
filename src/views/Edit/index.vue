@@ -40,7 +40,7 @@ export default {
     async handleSubmit(content) {
       let { accesstoken } = this.$store.state;
       let { tab, title } = this.$data;
-      console.log(content)
+      let topic_id = this.$route.params.id;
       if (this.title === "") {
         this.$message.warning("标题不能为空");
         return;
@@ -51,7 +51,8 @@ export default {
           accesstoken,
           title,
           tab,
-          content
+          content,
+          topic_id
         );
         if (result.success === true) {
           this.$message.success("编辑主题成功，跳转到该主题");

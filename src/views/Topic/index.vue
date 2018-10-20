@@ -24,7 +24,7 @@
             <Button 
               type="text"
               icon="md-hammer"
-              v-if="post.author.loginname === this.$store.state.userinfo.loginname"
+              v-if="this.$store.state.userinfo && post.author.loginname === this.$store.state.userinfo.loginname"
               @click="$router.push(`/edit/${post.id}`)"
             >编辑</Button>
           </div>
@@ -133,9 +133,9 @@ export default {
     },
     async postUps(reply, ups) {
       let { accesstoken, userinfo } = this.$store.state;
-      if(userinfo.loginname === reply.author.loginname){
-        this.$message.warning("不能给自己点赞噢")
-        return
+      if (userinfo.loginname === reply.author.loginname) {
+        this.$message.warning("不能给自己点赞噢");
+        return;
       }
       try {
         let result = await this.$api.postUps(accesstoken, reply.id);
@@ -145,7 +145,6 @@ export default {
           ups.pop();
         }
       } catch (error) {
-
         this.$message.warning("在登录后才能进行该操作");
       }
     },
@@ -193,53 +192,70 @@ export default {
 </script>
 
 <style lang="stylus">
-.cotainer
+.cotainer {
   display: flex;
   justify-content: space-between;
 
-  .topic
+  .topic {
     flex-grow: 0;
     min-width: calc(100% - 300px);
     margin-right: 15px;
 
-    .article-header
+    .article-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
 
-      .left
-        color #17233d
+      .left {
+        color: #17233d;
         font-size: 22px;
         font-weight: 500;
         margin-right: 10px;
 
-        .article-info
+        .article-info {
           font-size: 12px;
           margin-top: 8px;
-  .reply
-    margin-top 10px
-    margin-bottom 10px
-    .cell
-      display -webkit-box
-      justify-content space-between
-      align-items flex-start
-      .detail
-        margin-left 8px
-        flex-grow 1
-        .info
-          display flex
-          justify-content space-between
-          .info-item
-            margin-right 8px
-          .loginname
-            color #17233d
-            font-weight 800
-            font-size 15px
-          .index
-          .time
-            font-size 12px
-            color #808695
+        }
+      }
+    }
+  }
 
+  .reply {
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    .cell {
+      display: -webkit-box;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      .detail {
+        margin-left: 8px;
+        flex-grow: 1;
+
+        .info {
+          display: flex;
+          justify-content: space-between;
+
+          .info-item {
+            margin-right: 8px;
+          }
+
+          .loginname {
+            color: #17233d;
+            font-weight: 800;
+            font-size: 15px;
+          }
+
+          .index, .time {
+            font-size: 12px;
+            color: #808695;
+          }
+        }
+      }
+    }
+  }
+}
 </style>
 
 <style>

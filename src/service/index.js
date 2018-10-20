@@ -157,7 +157,13 @@ export default class Service {
    * @param content  String 主体内容
    */
 
-  static updateTopic(accesstoken, title, tab, content) {
-    return http.post("/topics/update", { accesstoken, title, tab, content });
+  static updateTopic(accesstoken, title, tab, content, topic_id) {
+    return http.post("/topics/update", {
+      accesstoken,
+      title,
+      tab,
+      content,
+      topic_id
+    });
   }
 }
