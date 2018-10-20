@@ -27,8 +27,8 @@ export default class Service {
    * @param accesstoken String 当需要知道一个主题是否被特定用户收藏以及对应评论是否被特定用户点赞时，才需要带此参数。
    *                    会影响返回值中的 is_collect 以及 replies 列表中的 is_uped 值。
    */
-  static getPost(id) {
-    return http.get(`/topic/${id}`);
+  static getPost(id, params) {
+    return http.get(`/topic/${id}`, { params });
   }
 
   /**

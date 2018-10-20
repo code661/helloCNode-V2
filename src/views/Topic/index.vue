@@ -21,6 +21,12 @@
           <div class="right">
             <Button v-if="isCollected" @click="clickCollectBtn('postDeCollect')">取消收藏</Button>
             <Button v-else @click="clickCollectBtn('postCollect')">收藏</Button>
+            <Button 
+              type="text"
+              icon="md-hammer"
+              v-if="post.author.loginname === this.$store.state.userinfo.loginname"
+              @click="$router.push(`/edit/${post.id}`)"
+            >编辑</Button>
           </div>
         </div>
         <div

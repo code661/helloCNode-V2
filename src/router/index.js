@@ -47,6 +47,15 @@ const router = new Router({
       meta: {
         title: "新建主题"
       }
+    },
+    {
+      name: "edit",
+      path: "/edit/:id",
+      component: () => import("@/views/Edit"),
+      props: true,
+      meta: {
+        title: "编辑主题"
+      }
     }
   ]
 });
