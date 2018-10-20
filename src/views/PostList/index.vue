@@ -6,7 +6,7 @@
         :tab="this.$route.query.tab || 'all'"
         :page="currentPage"
       />
-      <Button type="success">发布主题</Button>
+      <Button type="success" @click="$router.push('/create')">发布主题</Button>
     </div>
     <div class="content">
       <Cell

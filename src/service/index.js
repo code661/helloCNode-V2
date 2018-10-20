@@ -126,7 +126,38 @@ export default class Service {
    * @method GET
    *
    */
-   static getUser(username){
-     return http.get(`/user/${username}`)
-   }
+
+  static getUser(username) {
+    return http.get(`/user/${username}`);
+  }
+
+  /**
+   * @api /topics
+   * @name 新建主题
+   *
+   * @method POST
+   * @param accesstoken String 用户的 accessToken
+   * @param title String  标题
+   * @param tab  String 发帖子的版块，目前有 ask share job dev
+   * @param content  String 主体内容
+   */
+
+  static createTopic(accesstoken, title, tab, content) {
+    return http.post("/topics", { accesstoken, title, tab, content });
+  }
+
+  /**
+   * @api /topics/update
+   * @name 编辑主题
+   *
+   * @method POST
+   * @param accesstoken String 用户的 accessToken
+   * @param title String  标题
+   * @param tab  String 发帖子的版块，目前有 ask share job dev
+   * @param content  String 主体内容
+   */
+
+  static updateTopic(accesstoken, title, tab, content) {
+    return http.post("/topics/update", { accesstoken, title, tab, content });
+  }
 }

@@ -12,7 +12,7 @@ const router = new Router({
       name: "root",
       path: "/",
       component: () => import("@/views/PostList"),
-      meta:{
+      meta: {
         title: "主页"
       }
     },
@@ -25,18 +25,27 @@ const router = new Router({
     {
       name: "login",
       path: "/login",
-      component: ()=> import("@/views/Login"),
-      meta:{
+      component: () => import("@/views/Login"),
+      meta: {
         title: "登录"
       }
     },
     {
       name: "user",
       path: "/user/:username",
-      component: ()=> import("@/views/User"),
+      component: () => import("@/views/User"),
       props: true,
-      meta:{
+      meta: {
         title: "个人主页"
+      }
+    },
+    {
+      name: "create",
+      path: "/create",
+      component: () => import("@/views/Create"),
+      props: true,
+      meta: {
+        title: "新建主题"
       }
     }
   ]

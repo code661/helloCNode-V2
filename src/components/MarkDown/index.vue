@@ -6,11 +6,8 @@
           <p>回复主题</p>
         </slot>
       </div>
-      <a href="javascript:;" slot="extra" @click.prevent="previewVisible = !previewVisible">
-          <Button shape="circle" icon="ios-search"></Button>
-      </a>
-      <Input v-model="input" type="textarea" :rows="4" placeholder="Enter something..." />
-      <div class="preview" v-html="compiledMarkdown" v-show="previewVisible"></div>
+      <slot></slot>
+      <textarea id="markdown-editor"></textarea>
       <Button type="primary" :loading="loading" @click="handleSubmit">提交</Button>
     </Card>
   </div>
@@ -18,36 +15,40 @@
 
 <script>
 import { Button, Card, Input } from "iview";
-import marked from "marked";
+import SimpleMDE from "simplemde";
+import "simplemde/dist/simplemde.min.css";
 
 export default {
   data() {
     return {
-      input: "",
-      previewVisible: true
+      input: ""
     };
   },
-  props:["loading"],
+  props: ["loading"],
   components: {
     Button,
     Card,
     Input
   },
-  computed: {
-    compiledMarkdown() {
-      return marked(this.input);
-    }
+  computed: {},
+  mounted() {
+    this.initMarkdownEditor();
   },
   methods: {
     handleSubmit() {
-      if(!this.input){
-        this.$message.warning("评论不能为空")
-        return
+      var val = this.simplemde.value();
+      if (!val) {
+        this.$message.warning("内容不能为空");
+        return;
       }
-      this.$emit("submit", this.input);
-      this.input = ""
+      this.$emit("submit", val);
+    },
+    initMarkdownEditor() {
+      this.simplemde = new SimpleMDE({
+        element: document.getElementById("markdown-editor"),
+        spellChecker: false, // 启用拼写检查，会有背景色
+      });
     }
   }
 };
 </script>
-
