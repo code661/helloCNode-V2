@@ -13,7 +13,7 @@ const router = new Router({
       path: "/",
       component: () => import("@/views/PostList"),
       meta: {
-        title: "主页"
+        title: "CNode：Node.js专业中文社区"
       }
     },
     {
@@ -55,6 +55,14 @@ const router = new Router({
       props: true,
       meta: {
         title: "编辑主题"
+      }
+    },{
+      name: "message",
+      path: "/my/message",
+      component: ()=> import("@/views/Message"),
+      props: true,
+      meta: {
+        title: "消息中心"
       }
     }
   ]

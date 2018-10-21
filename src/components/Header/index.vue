@@ -17,7 +17,11 @@
                       <Icon size="18" type="md-contact" />
                     </template>
                     <MenuItem name="center" :to="`/user/${this.$store.state.userinfo.loginname}`">个人中心</MenuItem>
-                    <MenuItem name="message">未读消息</MenuItem>
+                    <MenuItem name="message" to="/my/message">
+                      <Badge :count="unreadCount" dot>
+                        未读消息
+                      </Badge>
+                    </MenuItem>
                     <MenuItem name="logout">注销</MenuItem>
                   </Submenu>
               </div>
@@ -27,26 +31,24 @@
 </template>
 
 <script>
-import {
-  Menu,
-  MenuItem,
-  Header,
-  Icon,
-  Submenu,
-  Avatar,
-  Badge
-} from "iview";
+import { Menu, MenuItem, Header, Icon, Submenu, Avatar, Badge } from "iview";
 
 export default {
   components: { Menu, MenuItem, Header, Icon, Submenu, Avatar, Badge },
+  data() {
+    return {
+      unreadCount: 0
+    };
+  },
   methods: {
-    async login(accesstoke) {
+    async login(accesstoken) {
       try {
-        this.$store.dispatch("postAccessToken", accesstoke).then(() => {
+        this.$store.dispatch("postAccessToken", accesstoken).then(() => {
           let { accesstoken, userinfo, collects } = this.$store.state;
           if (accesstoken && userinfo && !collects) {
             this.$store.dispatch("getCollects", userinfo.loginname);
           }
+          this.getUnreadCount(accesstoken);
         });
       } catch (error) {
         console.log(error);
@@ -56,11 +58,19 @@ export default {
       this.$store.dispatch("logout");
       this.$message.success("注销成功");
     },
-    select(name){
-      switch(name){
+    select(name) {
+      switch (name) {
         case "logout":
-          this.logout()
-          break
+          this.logout();
+          break;
+      }
+    },
+    async getUnreadCount(accesstoken) {
+      try {
+        let result = await this.$api.getUnreadCount(accesstoken);
+        this.unreadCount = result.data;
+      } catch (error) {
+        console.log(error);
       }
     }
   },
@@ -73,15 +83,17 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.layout-logo 
-  float: left
-  position: relative
-  top: 10px
-  left: 20px
-  width 130px
+.layout-logo {
+  float: left;
+  position: relative;
+  top: 10px;
+  left: 20px;
+  width: 130px;
+}
 
-.layout-nav 
-  float: right
+.layout-nav {
+  float: right;
+}
 </style>
 
 

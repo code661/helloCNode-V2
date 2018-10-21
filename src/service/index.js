@@ -166,4 +166,40 @@ export default class Service {
       topic_id
     });
   }
+
+  /**
+   * @api /message/count
+   * @name 获取未读消息数
+   *
+   * @method GET
+   *
+   */
+
+  static getUnreadCount(accesstoken) {
+    return http.get("/message/count", { params: { accesstoken } });
+  }
+
+  /**
+   * @api /messages
+   * @name 获取已读和未读消息
+   *
+   * @method GET
+   *
+   */
+
+  static getMessages(accesstoken) {
+    return http.get("/messages", { params: { accesstoken, mdrender: false } });
+  }
+
+  /**
+   * @api /message/mark_all
+   * @name 标记全部已读
+   *
+   * @method POST
+   *
+   */
+
+  static postMarkAllMsg(accesstoken) {
+    return http.post("/message/mark_all", { accesstoken });
+  }
 }
